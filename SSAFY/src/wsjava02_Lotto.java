@@ -7,7 +7,7 @@ public class wsjava02_Lotto {
 			lottos[i] = (int)(Math.random()*45)+1;
 			for(int j = 0; j<i;++j) {
 				if(lottos[i] == lottos[j]) {
-					//--i;
+					--i;
 					break;
 				}
 			}

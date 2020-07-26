@@ -1,61 +1,58 @@
 import java.util.Scanner;
 
 public class Omok {
-   
-   static int pan[][] = new int[19][19];
-   static int dr[] = {-1, -1, 0, 1, 1, 1, 0, -1};
-   static int dc[] = {0, 1, 1, 1, 0, -1, -1, -1};
-   public static void main(String[] args) {
-      // TODO Auto-generated method stub\
-      Scanner sc = new Scanner(System.in);
-      for(int i=0;i<19;i++) {
-         for(int j=0;j<19;j++) {
-            pan[i][j]=sc.nextInt();
-         }
-      }
-      
-      int xx=0, yy=0;
-      boolean flag = true;
-      int remem=0, resultr=0, resultc=0;
-      
-      
-      for(int i=0;i<pan.length;i++) {
-         for(int j=0; j<pan.length;j++) {
-            if(flag&&pan[i][j]!=0) {
-               
-               remem = pan[i][j];
-               resultr = i;
-               resultc = j;
-               
-               int count = 1;
-               
-               for(int a=0;a<dr.length;a++) {
-                  xx=i;
-                  yy=j;
-                  
-                  for(int k=0;k<6;k++) {
-                     xx+=dr[a];
-                     yy+=dc[a];
-                     if(xx<0||yy<0||xx>=19||yy>=19)
-                        break;
-                     
-                     if(pan[xx][yy]==remem) 
-                        count++;
-                     else
-                        break;
-                  }
-                  
-                  if(count==5) {
-                     flag = false;
-                     break;
-                  }
-               }
-            }
-         }
-      }
-      System.out.println(remem);
-      System.out.println((resultr+1)+" "+(resultc+1));
-   }
+	static int[] dr = {-1,-1,0,1,1,1,0,-1};
+	static int[] dc = {0,1,1,1,0,-1,-1,-1};
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = 19;
+		int[][] board = new int[N][N];
+		for(int i = 0; i<N;++i) {
+			for(int j = 0; j<N;++j) {
+				board[i][j] = sc.nextInt();
+			}
+		}
+		boolean endFlag = false;
+		for(int i =0; i<N;++i) {
+			for(int j = 0; j<N;++j) {
+				if(board[i][j] != 0) {
+					int color = board[i][j];
+					for(int k = 0; k< 8; ++k) {
+						int r = i+ dr[k];
+						int c = j+ dc[k];
+						if(r<0||c<0||r>=N||c>=N) 
+							continue;
+						if(board[r][c] == color) {
+							int count = 2;
+							for(int l = 0; l<4;++l) {
+								r += dr[k];
+								c += dc[k];
+								if(board[r][c] != color) 
+									break;
+								else
+									++count;
+							}
+							if(count==5) {
+								System.out.println(color);
+								System.out.println((i+1)+" "+(j+1));
+								endFlag = true;
+								break;
+							}
+						}
+					}
+					
+				}
+				if(endFlag)
+					break;
+			}
+			if(endFlag)
+				break;
+			
+		}
+		if(!endFlag) {
+			System.out.println(0);
+		}
+		sc.close();
+	}
 
 }
-
