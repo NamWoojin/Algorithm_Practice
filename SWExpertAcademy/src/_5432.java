@@ -8,22 +8,21 @@ public class _5432 {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(in.readLine());
 		char[] arr = new char[] {};
-		
+
 		for (int tc = 1; tc <= T; ++tc) {
 			arr = in.readLine().toCharArray();
 			int cutNum = 0;
 			boolean[] pointers = new boolean[arr.length];
 			for (int i = 0; i < arr.length - 1; ++i) {
-				if (arr[i] == '(') {
-					if (arr[i + 1] == ')') {
-						pointers[i] = true;
-						arr[i] = arr[i + 1] = '-';
-					}
+				if (arr[i] == '(' && arr[i + 1] == ')') {
+					pointers[i] = true;
+					arr[i] = arr[i + 1] = '-';
 				}
 			}
 
 			boolean endFlag = false;
 			while (!endFlag) {
+				
 				for (int i = 0; i < arr.length; ++i) {
 					if (pointers[i] && i != 0) {
 						int num = i - 1;
@@ -32,8 +31,7 @@ public class _5432 {
 							if (num == 0)
 								break;
 						}
-
-						for (int k = i + 2; k < arr.length; ++k) {
+						for (int k = i+2; k < arr.length; ++k) {
 							if (arr[k] == '(')
 								break;
 							else if (arr[k] == ')') {
@@ -62,7 +60,7 @@ public class _5432 {
 				if (end)
 					endFlag = true;
 			}
-			
+
 			System.out.print("#");
 			System.out.print(tc);
 			System.out.print(" ");
