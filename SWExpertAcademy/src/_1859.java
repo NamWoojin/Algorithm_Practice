@@ -4,45 +4,42 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class _1859 {
-	private static int[] arr;
-	private static long max = 0;
-	private static int N = 0;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(in.readLine());
-		for(int tc = 1; tc<= T;++tc) {
-			max = 0;
-			N = Integer.parseInt(in.readLine());
-			arr = new int[N];
-			StringTokenizer st = new StringTokenizer(in.readLine()," ");
-			for(int i = 0; i<N;++i) {
+		for (int tc = 1; tc <= T; ++tc) {
+			int N = Integer.parseInt(in.readLine());
+			int[] arr = new int[N];
+			int money = 0;
+			int count = 0;
+			StringTokenizer st = new StringTokenizer(in.readLine(), " ");
+			for (int i = 0; i <= N; ++i) {
 				arr[i] = Integer.parseInt(st.nextToken());
+				if (i == N) {
+					if (count != 0) {
+						money += arr[i] * count;
+						count = 0;
+					}
+				} else {
+					if (arr[i] <= arr[i + 1]) {
+						money -= arr[i];
+						++count;
+
+					} else {
+						if (count != 0) {
+							money += arr[i] * count;
+							count = 0;
+						}
+					}
+				}
 			}
-			
-			calculate(0,0,0,0);
-			
+
 			System.out.print("#");
 			System.out.print(tc);
 			System.out.print(" ");
-			System.out.println(max);
+			System.out.println(money);
 		}
-	
-	}
-	
-	private static void calculate(int index,long use,long get,long usenum) {
-		if(index == N) {
-			long sum = get+use;
-			if(sum > max)
-				max = sum;
-			return;
-		}
-		
-		
-		calculate(index+1,use,get,usenum);	//¾Æ¹«°Íµµ¾ÈÇÔ
-		calculate(index+1,use-arr[index],get,usenum+1);	//»ï
-		if(usenum>0)
-			calculate(index+1,use,get+arr[index],usenum-1);	//ÆÊ
-		
+
 	}
 
 }
