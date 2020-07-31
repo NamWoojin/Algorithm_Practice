@@ -19,7 +19,6 @@ public class ¼ø¿­ {
 				perm(idx +1);
 				check[i] = false;
 			}
-			
 		}
 		
 	}
