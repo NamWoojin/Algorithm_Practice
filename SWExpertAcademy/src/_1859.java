@@ -10,28 +10,28 @@ public class _1859 {
 		for (int tc = 1; tc <= T; ++tc) {
 			int N = Integer.parseInt(in.readLine());
 			int[] arr = new int[N];
-			int money = 0;
+			long max = 0;
+			long money = 0;
 			int count = 0;
 			StringTokenizer st = new StringTokenizer(in.readLine(), " ");
-			for (int i = 0; i <= N; ++i) {
+			for (int i =0 ; i < N; ++i) {
 				arr[i] = Integer.parseInt(st.nextToken());
-				if (i == N) {
-					if (count != 0) {
-						money += arr[i] * count;
-						count = 0;
+			}
+			for(int i = N-1;i>=0;--i) {
+				if(arr[i] > max) {
+					if(count != 0) {
+						money += max*count;
 					}
-				} else {
-					if (arr[i] <= arr[i + 1]) {
-						money -= arr[i];
-						++count;
-
-					} else {
-						if (count != 0) {
-							money += arr[i] * count;
-							count = 0;
-						}
-					}
+					max = arr[i];
+					count = 0;
 				}
+				else {
+					money -= arr[i];
+					++count;
+				}
+			}
+			if(count != 0) {
+				money += max*count;
 			}
 
 			System.out.print("#");
