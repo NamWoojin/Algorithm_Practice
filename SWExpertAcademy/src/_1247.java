@@ -40,6 +40,8 @@ public class _1247 {
 	}
 
 	private static void findWay(int idx, int length, int posX, int posY) {
+		if(length >= min)	//계산 도중 합의 길이가 최소값보다 커지면 return
+			return;
 		if (idx == N) {
 			length += Math.abs(posX - home[0]) + Math.abs(posY - home[1]);
 			if (min > length)
