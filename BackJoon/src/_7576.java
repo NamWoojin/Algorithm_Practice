@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-
+//7576 ≈‰∏∂≈‰
 public class _7576 {
 	static int[] dr = { -1, 0, 1, 0 };
 	static int[] dc = { 0, 1, 0, -1 };
@@ -27,33 +27,13 @@ public class _7576 {
 
 		boolean allRipe = true;
 		
-		end: for (int i = 0; i < N; ++i) {
+		for (int i = 0; i < N; ++i) {
 			for (int j = 0; j < M; ++j) {
 				if (box[i][j] == 1) {
 					next.offer(i);
 					next.offer(j);
 				} else if(box[i][j] == 0) {
 					allRipe = false;
-					int cant = 0;
-					for (int k = 0; k < 4; ++k) {
-						int r = i + dr[k];
-						int c = j + dc[k];
-
-						if (r < 0 || c < 0 || r >= N || c >= M) {
-							++cant;
-							continue;
-						}
-						if (box[r][c] == -1)
-							++cant;
-					}
-					if (cant == 4) {
-						days = -1;
-						endFlag = true;
-						break end;
-					}
-					else {
-						
-					}
 				}
 			}
 		}
