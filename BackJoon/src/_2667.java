@@ -39,7 +39,7 @@ public class _2667 {
 			}
 		}
 
-		int danji = 10;
+		int danji=0;
 		for (int h = 0; h < W; ++h) {
 			for (int w = 0; w < W; ++w) {
 				if (map[h][w] == 1) {
@@ -52,7 +52,7 @@ public class _2667 {
 			}
 		}
 
-		System.out.println(danji - 10);
+		System.out.println(danji);
 		for (int i = 0; i < array.size(); ++i)
 			System.out.println(array.get(i));
 
