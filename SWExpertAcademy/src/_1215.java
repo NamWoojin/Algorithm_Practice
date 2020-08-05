@@ -24,7 +24,7 @@ public class _1215 {
 				arr[i] = new StringTokenizer(in.readLine()).nextToken().toCharArray();
 
 			for (int i = 0; i < 8; ++i) {
-				for (int j = 0; j <= 8 - N; ++j) {
+				for (int j = 0; j < 8 - N+1; ++j) {
 					palindrome(0, i, j, true);
 					palindrome(0, i, j, false);
 				}
@@ -43,9 +43,12 @@ public class _1215 {
 			return;
 		}
 
-		if (horizontal && arr[standard][startIdx + idx] == arr[standard][startIdx + N - idx] ||
-				!horizontal && arr[startIdx + idx][standard] == arr[startIdx + N - idx][standard]) {
+		if (horizontal && arr[standard][startIdx + idx] == arr[standard][startIdx + N-1 - idx] ||
+				!horizontal && arr[startIdx + idx][standard] == arr[startIdx + N-1 - idx][standard]) {
 			palindrome(idx+1,standard,startIdx,horizontal);
+		}
+		else {
+			return;
 		}
 	}
 
