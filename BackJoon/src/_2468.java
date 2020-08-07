@@ -33,7 +33,6 @@ public class _2468 {
 		int min = 100;
 		int max = 0;
 		int maxIsland = 0;
-		int maxBorder = 0;
 		for (int i = 0; i < N; ++i) {
 			st = new StringTokenizer(in.readLine()); // 한 줄 읽기(띄어쓰기 단위로 자름)
 			for (int j = 0; j < N; ++j) {
@@ -59,7 +58,6 @@ public class _2468 {
 
 				if (maxIsland <= countIsland) {
 					maxIsland = countIsland;
-					maxBorder = border;
 				}
 			}
 		}
