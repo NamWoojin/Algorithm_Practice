@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class _19542 {
@@ -29,12 +30,11 @@ public class _19542 {
 	
 	public static void setPosition(int idx) {
 		if(nodes[idx].parent == 0) {
-			nodes[nodes[idx].parent].parent = idx;
 			return;
 		}
 		nodes[nodes[idx].parent].deleteChild(idx);
 		setPosition(nodes[idx].parent);
-		nodes[nodes[idx].parent].add(nodes[nodes[idx].parent].parent);
+		nodes[idx].add(nodes[idx].parent);
 		nodes[nodes[idx].parent].parent = idx;
 	}
 	
