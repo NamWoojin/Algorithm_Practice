@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Áßº¹¼ø¿­ {
+public class ì¤‘ë³µìˆœì—´ {
 	static int N = 3;
 	static int[] arr = {1,3,5};
 	static int[] sel = new int[3];
@@ -11,7 +11,7 @@ public class Áßº¹¼ø¿­ {
 		}
 		
 		for(int i = 0; i<N;++i) {
-			sel[idx] = arr[i];	//¿ø¼ÒÀÇ °³¼ö = 3 -> 3Áø Æ®¸®
+			sel[idx] = arr[i];	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ = 3 -> 3ï¿½ï¿½ Æ®ï¿½ï¿½
 			perm( idx +1);
 		}
 		

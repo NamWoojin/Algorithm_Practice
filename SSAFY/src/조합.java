@@ -1,22 +1,22 @@
 import java.util.Arrays;
 
-public class Á¶ÇÕ {
+public class ì¡°í•© {
 	static int[] arr = {1,2,3};
 	static int N = 3;
 	static int R = 2;
 	static int[] sel = new int[2];
 	static void comb(int upArrow,int downArrow) {
-		if(downArrow ==R) {	//¾Æ·¡ È­»ìÇ¥°¡ ³ª°¡¸é Ãâ·Â
+		if(downArrow ==R) {	//ï¿½Æ·ï¿½ È­ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			System.out.println(Arrays.toString(sel));
 			return;
 		}
-		if(upArrow == N) {	//À§ È­»ìÇ¥°¡ ³ª°¡¸é ¾Æ¿ô
+		if(upArrow == N) {	//ï¿½ï¿½ È­ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ¿ï¿½
 			return;
 		}
 		
-		//À§ È­»ìÇ¥ À§Ä¡ÀÇ ¼ýÀÚ¸¦ ¾Æ·¡ È­»ìÇ¥ À§Ä¡¿¡ ´ã´Â´Ù.
-		//À§¿¡ È­»ìÇ¥ +1, ¾Æ·¡ È­»ìÇ¥ +1
-		//À§¿¡ È­»ìÇ¥ +1, ¾Æ·¡ È­»ìÇ¥ ±×´ë·Î		
+		//ï¿½ï¿½ È­ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Æ·ï¿½ È­ï¿½ï¿½Ç¥ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Â´ï¿½.
+		//ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥ +1, ï¿½Æ·ï¿½ È­ï¿½ï¿½Ç¥ +1
+		//ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½Ç¥ +1, ï¿½Æ·ï¿½ È­ï¿½ï¿½Ç¥ ï¿½×´ï¿½ï¿½		
 		
 		sel[downArrow] = arr[upArrow];
 		comb(upArrow+1,downArrow+1);

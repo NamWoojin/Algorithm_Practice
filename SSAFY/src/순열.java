@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
-public class ¼ø¿­ {
+public class ìˆœì—´ {
 	static int N = 3;
 	static int[] arr = {1,3,5};
-	static int[] sel = new int[3];	//arr°ú °°Àº Å©±â...?
+	static int[] sel = new int[3];	//arrï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½...?
 	static boolean[] check = new boolean[3];
 	static void perm(int idx) {
 		if(idx == 3) {
@@ -12,10 +12,10 @@ public class ¼ø¿­ {
 		}
 		
 		for(int i = 0; i<N;++i) {
-			//°í¸£Áö ¾ÊÀº ¼ýÀÚ¿¡ ´ëÇØ¼­¸¸ ¼öÇà
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			if(!check[i]) {
 				check[i] = true;
-				sel[idx] = arr[i];	//¿ø¼ÒÀÇ °³¼ö = 3 -> 3Áø Æ®¸®
+				sel[idx] = arr[i];	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ = 3 -> 3ï¿½ï¿½ Æ®ï¿½ï¿½
 				perm(idx +1);
 				check[i] = false;
 			}
