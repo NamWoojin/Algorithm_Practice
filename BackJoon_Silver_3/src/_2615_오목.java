@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Omok {
+public class _2615_오목 {
 	static int[] dr = { 1, -1, 0, 1};
 	static int[] dc = { 0, 1, 1, 1};
 
