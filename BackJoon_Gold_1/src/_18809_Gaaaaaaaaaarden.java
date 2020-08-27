@@ -101,17 +101,13 @@ public class _18809_Gaaaaaaaaaarden {
 		int redNum  = 4;
 		int flowerNum = 0;
 		while (!queue.isEmpty()) {
-//			for(int i = 0; i<N;++i)
-//				System.out.println(Arrays.toString(tempGarden[i]));
-			
-			
 			int size = queue.size();
 			greenNum += 2;
 			redNum += 2;
 			
 			while (--size >= 0) {
 				Node n = queue.poll();
-//				System.out.println(n.r+" "+n.c+" "+n.placeNum);
+				
 				if(tempGarden[n.r][n.c] == -1)
 					continue;
 				
@@ -136,9 +132,6 @@ public class _18809_Gaaaaaaaaaarden {
 					}
 				}
 			}
-			
-			
-//			System.out.println();
 		}
 
 		if (flowerNum > max) {
