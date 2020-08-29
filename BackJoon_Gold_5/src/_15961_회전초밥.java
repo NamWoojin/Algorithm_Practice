@@ -1,11 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class _15961_회전초밥 {
-	static int N, d, k, c,max = 0;
+	static int N, d, k, c, max = 0, count = 0;
 	static int[] array;
+	static int[] check;
+	static int startPoint = 0;
+	static int endPoint = 0;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -16,35 +20,30 @@ public class _15961_회전초밥 {
 		c = Integer.parseInt(st.nextToken());
 
 		array = new int[N];
+		check = new int[d + 1];
 		for (int i = 0; i < N; ++i) {
 			array[i] = Integer.parseInt(in.readLine());
 		}
-		for (int i = 0; i < N; ++i) {
-			boolean[] check = new boolean[d+1];
-			max = Math.max(max,counter(i, 1,check,false));
+
+		for (endPoint = 0; endPoint < k; ++endPoint) {
+			if (++check[array[endPoint]] == 1) {
+				++count;
+			}
+		}
+
+		while (startPoint != N) {
+
+			if (--check[array[startPoint++]] == 0)
+				--count;
+			
+			if(endPoint==N)
+				endPoint = 0;
+			
+			if (++check[array[endPoint++]] == 1)
+				++count;
+
+			max = check[c] == 0 ? Math.max(count+1, max):Math.max(count, max);
 		}
 		System.out.println(max);
 	}
-
-	private static int counter(int idx,int count,boolean[] check,boolean coupon) {
-		if(count == k) {
-			return coupon?  count : count+1;
-		}
-		
-		
-		if(idx == N)
-			idx = 0;
-		
-		if(!check[array[idx]]) {
-			check[array[idx]] = true;
-			if (c== array[idx])
-				coupon = true;
-			return counter(idx+1,count+1,check,coupon);
-			
-		}else {
-			return counter(idx+1,count,check,coupon);
-		}
-		
-	}
-
 }
