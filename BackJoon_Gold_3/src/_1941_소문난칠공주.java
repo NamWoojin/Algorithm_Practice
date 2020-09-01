@@ -62,7 +62,6 @@ public class _1941_소문난칠공주 {
 		Comb(pos + 1, arr); // 안고르고 넘어가기
 		ArrayList<Node> temp = new ArrayList<>(arr);
 		temp.add(new Node(pos / 5, pos % 5));
-
 		Comb(pos + 1, temp); // 고르고 넘어가기
 
 	}
