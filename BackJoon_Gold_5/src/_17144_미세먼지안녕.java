@@ -33,7 +33,7 @@ public class _17144_미세먼지안녕 {
 		Queue<Node> queue = new LinkedList<>();
 		for (int i = 0; i < R; ++i) {
 			st = new StringTokenizer(in.readLine());
-			for (int j = 0; j < R; ++j) {
+			for (int j = 0; j < C; ++j) {
 				map[i][j] = Integer.parseInt(st.nextToken());
 				if (map[i][j] > 0) {
 					queue.add(new Node(i, j));
@@ -58,7 +58,9 @@ public class _17144_미세먼지안녕 {
 
 					if (rr < 0 || cc < 0 || rr >= R || cc >= C)
 						continue;
-
+					if(map[rr][cc] == -1)
+						continue;
+					
 					tempMap[rr][cc] += map[n.r][n.c] / 5;
 					++count;
 					if (tempMap[rr][cc] >= 5)
@@ -70,13 +72,14 @@ public class _17144_미세먼지안녕 {
 			}
 
 			map = tempMap;
-
+			
 			move(Air1 - 2, 0, false, 0);
 			move(Air2 + 2, 0, true, 2);
 
 			for(int j = 0; j<R;++j) {
 				System.out.println(Arrays.toString(map[j]));
 			}
+			
 			System.out.println();
 		}
 		int sum = 0;
