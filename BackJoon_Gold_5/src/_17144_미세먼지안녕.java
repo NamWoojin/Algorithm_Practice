@@ -30,14 +30,11 @@ public class _17144_미세먼지안녕 {
 		C = Integer.parseInt(st.nextToken());
 		int T = Integer.parseInt(st.nextToken());
 		map = new int[R][C];
-		Queue<Node> queue = new LinkedList<>();
 		for (int i = 0; i < R; ++i) {
 			st = new StringTokenizer(in.readLine());
 			for (int j = 0; j < C; ++j) {
 				map[i][j] = Integer.parseInt(st.nextToken());
-				if (map[i][j] > 0) {
-					queue.add(new Node(i, j));
-				} else if (map[i][0] == -1) {
+				if (map[i][0] == -1) {
 					if (Air1 == -1)
 						Air1 = i;
 					else
@@ -48,39 +45,43 @@ public class _17144_미세먼지안녕 {
 
 		for (int i = 0; i < T; ++i) {
 			int[][] tempMap = new int[R][C];
-			int size = queue.size();
-			while (--size >= 0) {
-				Node n = queue.poll();
-				int count = 0;
-				for (int k = 0; k < 4; ++k) {
-					int rr = n.r + dr[k];
-					int cc = n.c + dc[k];
-
-					if (rr < 0 || cc < 0 || rr >= R || cc >= C)
+			for(int  r=0; r<R;++r) {
+				for(int c = 0; c<C;++c) {
+					if(map[r][c] == 0)
 						continue;
-					if(map[rr][cc] == -1)
+					else if(map[r][c] < 5) {
+						tempMap[r][c] += map[r][c];
 						continue;
+					}
 					
-					tempMap[rr][cc] += map[n.r][n.c] / 5;
-					++count;
-					if (tempMap[rr][cc] >= 5)
-						queue.offer(new Node(rr, cc));
-				}
-				tempMap[n.r][n.c] += map[n.r][n.c] - (map[n.r][n.c] / 5) * count;
-				if (tempMap[n.r][n.c] >= 5)
-					queue.offer(new Node(n.r, n.c));
-			}
+					int count = 0;
+					for (int k = 0; k < 4; ++k) {
+						int rr = r + dr[k];
+						int cc = c + dc[k];
 
+						if (rr < 0 || cc < 0 || rr >= R || cc >= C)
+							continue;
+						if(map[rr][cc] == -1)
+							continue;
+						
+						tempMap[rr][cc] += map[r][c] / 5;
+						++count;
+					}
+					
+					tempMap[r][c] += map[r][c] - (map[r][c] / 5) * count;
+				}
+			}//전체 탐색 끝
+			
 			map = tempMap;
 			
 			move(Air1 - 2, 0, false, 0);
 			move(Air2 + 2, 0, true, 2);
 
-			for(int j = 0; j<R;++j) {
-				System.out.println(Arrays.toString(map[j]));
-			}
-			
-			System.out.println();
+//			for(int j = 0; j<R;++j) {
+//				System.out.println(Arrays.toString(map[j]));
+//			}
+//			
+//			System.out.println();
 		}
 		int sum = 0;
 		for (int i = 0; i < R; ++i) {

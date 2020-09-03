@@ -8,79 +8,93 @@ import java.util.StringTokenizer;
 public class _1767_프로세서연결하기 {
 	static int[] dr = { -1, 0, 1, 0 };
 	static int[] dc = { 0, -1, 0, 1 };
-
-	static class Node {
-		int r, c;
-
-		Node(int r, int c) {
-			this.r = r;
-			this.c = c;
-		}
-	}
-
-	static ArrayList<Node> array;
-	static int N;
+	static ArrayList<int[]> array;
+	static int arr[][], N, max, min;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(in.readLine());
 		for (int tc = 1; tc <= T; ++tc) {
-			array = new ArrayList<>();
 			StringTokenizer st;
+			array = new ArrayList<int[]>();
 			N = Integer.parseInt(in.readLine());
-			int[][] arr = new int[N][N];
+			arr = new int[N][N];
+			max = 0;
+			min = Integer.MAX_VALUE;
 			for (int i = 0; i < N; ++i) {
 				st = new StringTokenizer(in.readLine());
 				for (int j = 0; j < N; ++j) {
 					arr[i][j] = Integer.parseInt(st.nextToken());
-					if (arr[i][j] == 1 && i != 0 && i != N && j != 0 && j != N) {
-						array.add(new Node(i, j));
+					if (arr[i][j] == 1 && i != 0 && i != N - 1 && j != 0 && j != N - 1) {
+						array.add(new int[] { i, j });
 					}
 				}
 			}
-			
-			count(0,arr,0,0);
+//			connect(0,0);
+			go(0, arr, 0, 0);
+
 			System.out.print("#");
 			System.out.print(tc);
 			System.out.print(" ");
-			System.out.println(minLength);
+			System.out.println(min);
 
 		}
 	}
-	static int maxConnection = 0;
-	static int minLength = Integer.MAX_VALUE;
-	static void count(int idx, int[][] tempArr,int connection,int num) {
+
+	private static boolean isAvailable(int r, int c, int d,int[][] tempArr) {
+		int nr = r, nc = c;
+		while (true) {
+			nr += dr[d];
+			nc += dc[d];
+			if (nr < 0 || nr >= N || nc < 0 || nc >= N) // 끝까지 간 경우(전선을 놓을 수 있는 경우)
+				break;
+
+			if (tempArr[nr][nc] >= 1) // 해당 위치에 코어나 전선이 있는 경우
+				return false;
+		}
+		return true;
+	}
+
+	static void go(int idx, int[][] tempArr, int cCnt, int count) {
+		//현재까지 연결된 코어 수 + 앞으로 처리해야할 남은 코어수 : 기대할 수 있는 최대 코어 수
+		if(cCnt+array.size()-idx < max)return;	//가지치기
+		
 		if (idx == array.size()) {
-			if(connection == maxConnection) {
-				minLength = Math.min(num, minLength);
-			}else if(connection > maxConnection) {
-				maxConnection = connection;
-				minLength = num;
+//			System.out.println(cCnt + " "+ count);
+			if (cCnt > max) {
+				max = cCnt;
+				min = count;
+			} else if (cCnt == max) {
+				if(min > count)
+					min = count;
 			}
+			
 			return;
 		}
-		
-		re: for (int i = 0; i < 4; ++i) {
-			int[][] tempTemp = new int[N][N];
-			for (int j = 0; j < N; ++j)
-				tempTemp[j] = tempArr[j].clone();
-			
-			int count = 0;
-			int r = array.get(idx).r;
-			int c = array.get(idx).c;
-			while (r > 0 && c > 0 && r < N-1 && c < N-1) {
-				r += dr[i];
-				c += dc[i];
-				if (tempTemp[r][c] == 1 || tempTemp[r][c] == 2)
-					continue re;
 
-				tempTemp[r][c] = 2;
-				++count;
-				
-			}
-			count(idx + 1, tempTemp,connection + 1,num + count);
-		}
-		count(idx + 1, tempArr,connection,num);
 		
+		for (int i = 0; i < 4; ++i) {
+			int r = array.get(idx)[0];
+			int c = array.get(idx)[1];
+			if (isAvailable(r, c, i,tempArr)) {
+				int[][] tempTemp = new int[N][];
+				for (int j = 0; j < N; ++j)
+					tempTemp[j] = tempArr[j].clone();
+				int cnt = 0;
+
+				while (true) {
+					r += dr[i];
+					c += dc[i];
+					if (r < 0 || r >= N || c < 0 || c >= N)
+						break;
+					
+					tempTemp[r][c] = 2;
+					++cnt;
+				}
+				go(idx + 1, tempTemp, cCnt + 1, cnt + count);
+			}
+		}
+		go(idx + 1, tempArr, cCnt, count);
+
 	}
 }
