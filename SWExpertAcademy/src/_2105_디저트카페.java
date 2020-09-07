@@ -91,6 +91,7 @@ public class _2105_디저트카페 {
 				queue.offer(new Node(n.r+dr[0], n.c+dc[0], 0, 1, 1));
 				continue;
 			}
+			
 			queue.offer(new Node(n.r + dr[n.dir], n.c + dc[n.dir], n.dir, n.move + 1, n.change));
 		}
 
