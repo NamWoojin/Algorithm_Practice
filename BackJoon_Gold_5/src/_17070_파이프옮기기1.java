@@ -34,7 +34,8 @@ public class _17070_파이프옮기기1 {
 		
 		for(int i = -1; i<=1;++i) {
 			int newDir = dir + i;
-			if(newDir<0 || newDir>2 || Math.abs(newDir-dir) ==2)
+			if(newDir<0 || newDir>2)
+			//if(newDir<0 || newDir>2 || Math.abs(newDir-dir) ==2)
 				continue;
 			
 			int newR = r+dr[newDir];
