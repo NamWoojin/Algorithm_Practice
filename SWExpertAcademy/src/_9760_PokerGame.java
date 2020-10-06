@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class _9760_PokerGame {
-	//s, d, h, c
-	//a23456789tjqk
-	static class card implements Comparable<card>{
-		int suit,rank;
+	// s, d, h, c
+	// a23456789tjqk
+	static class card implements Comparable<card> {
+		int suit, rank;
 
 		@Override
 		public int compareTo(card o) {
@@ -16,17 +16,19 @@ public class _9760_PokerGame {
 			return this.rank - o.rank;
 		}
 	}
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int T = Integer.parseInt(in.readLine());
-		for(int tc =1;tc<=T;++tc) {
+		for (int tc = 1; tc <= T; ++tc) {
 			StringTokenizer st = new StringTokenizer(in.readLine());
 			card[] cards = new card[5];
 			int[] ranks = new int[14];
-			for(int i = 0; i<5;++i) {
+			int[] suits = new int[4];
+			for (int i = 0; i < 5; ++i) {
 				String str = st.nextToken();
 				cards[i] = new card();
-				switch(str.charAt(0)) {
+				switch (str.charAt(0)) {
 				case 'S':
 					cards[i].suit = 0;
 					break;
@@ -40,8 +42,9 @@ public class _9760_PokerGame {
 					cards[i].suit = 3;
 					break;
 				}
-				
-				switch(str.charAt(1)) {
+				++suits[cards[i].suit];
+
+				switch (str.charAt(1)) {
 				case 'A':
 					cards[i].rank = 1;
 					break;
@@ -58,44 +61,29 @@ public class _9760_PokerGame {
 					cards[i].rank = 13;
 					break;
 				default:
-					cards[i].rank = str.charAt(1)-'0';
+					cards[i].rank = str.charAt(1) - '0';
 					break;
 				}
 				++ranks[cards[i].rank];
 			}
 			Arrays.sort(cards);
-			
+
 			int kind = 9;
-			
-			boolean flush = true;
-			boolean straight = true;
-			for(int i =0; i<4;++i) {
-				if(flush && cards[i].suit != cards[i+1].suit) {
-					flush = false;
-				}
-				if(straight && cards[i].rank +1 != cards[i+1].rank) {
-					straight = false;
-				}
-			}
-			if(flush && kind > 4)
-				kind =4;
-			if(flush && straight)
-				kind = 1;
-			
-			for(int i = 1;i<14;++i) {
-				switch(ranks[i]) {
+
+			for (int i = 1; i < 14; ++i) {
+				switch (ranks[i]) {
 				case 2:
-					if(kind == 9)
+					if (kind == 9)
 						kind = 8;
-					else if(kind == 6)
+					else if (kind == 6)
 						kind = 3;
-					else if(kind == 8)
+					else if (kind == 8)
 						kind = 7;
 					break;
 				case 3:
-					if(kind == 8)
+					if (kind == 8)
 						kind = 3;
-					else if(kind == 9)
+					else if (kind == 9)
 						kind = 6;
 					break;
 				case 4:
@@ -103,9 +91,28 @@ public class _9760_PokerGame {
 					break;
 				}
 			}
-			
-			System.out.print("#"+tc+" ");
-			switch(kind) {
+
+			boolean flush = false;
+			boolean straight = false;
+			int cnt = 0;
+			for (int i = 0; i < 4; ++i) {
+				if (suits[i] == 5) {
+					flush = true;
+				}
+				if (cards[i].rank + 1 == cards[i + 1].rank) {
+					++cnt;
+				}
+			}
+			if (cnt == 4 || (cnt == 3 && cards[4].rank == 13 && cards[0].rank == 1))
+				straight = true;
+
+			if (flush && kind > 4)
+				kind = 4;
+			if (flush && straight)
+				kind = 1;
+
+			System.out.print("#" + tc + " ");
+			switch (kind) {
 			case 1:
 				System.out.println("Straight Flush");
 				break;
@@ -133,7 +140,7 @@ public class _9760_PokerGame {
 			case 9:
 				System.out.println("High card");
 				break;
-				
+
 			}
 		}
 	}
