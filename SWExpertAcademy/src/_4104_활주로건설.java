@@ -9,8 +9,8 @@ public class _4104_활주로건설 {
 	static boolean[] visited;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(in.readLine());
-		for (int tc = 1; tc <= T; ++tc) {
+//		int T = Integer.parseInt(in.readLine());
+//		for (int tc = 1; tc <= T; ++tc) {
 			StringTokenizer st = new StringTokenizer(in.readLine());
 			N = Integer.parseInt(st.nextToken());
 			X = Integer.parseInt(st.nextToken());
@@ -30,19 +30,15 @@ public class _4104_활주로건설 {
 					find(i, 1, t);
 				}
 			}
-			System.out.println("#" + tc + " " + count);
-		}
+			System.out.println(count);
+//			System.out.println("#" + tc + " " + count);
+//		}
 	}
 
 	private static void find(int row, int idx, int dir) {
 		if (idx >= N) {
 			++count;
 			return;
-//			if (upDown && levelCount >= X) {// 내려온 후 x만큼 계산했을 때
-//				upDown = false;
-//				levelCount = 1;
-//			}
-//			return !upDown;
 		}
 		
 		int diff = dir == 0 ? map[row][idx] - map[row][idx - 1] : map[idx][row] - map[idx - 1][row];
@@ -78,7 +74,7 @@ public class _4104_활주로건설 {
 			
 			num = dir == 0 ?map[row][idx]:map[idx][row];
 			
-			for(int i = 1; i<X;++i) {
+			for(int i = 0; i<X;++i) {
 				if(idx+i>=N)
 					return;
 				if(dir == 0) {
