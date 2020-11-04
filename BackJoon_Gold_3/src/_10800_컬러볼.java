@@ -1,65 +1,72 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class _10800_컬러볼 {
-	static class Ball{
+	static class Ball implements Comparable<Ball> {
 		int color;
 		int size;
-		Ball(int c,int s){
+		int idx;
+
+		Ball(int c, int s, int idx) {
 			this.color = c;
 			this.size = s;
+			this.idx = idx;
+		}
+
+		@Override
+		public int compareTo(Ball o) {
+			return o.size - this.size;
 		}
 	}
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader in =  new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(in.readLine());
-		Ball[] balls = new Ball[N];
-		HashMap<Integer,ArrayList<Integer>> map =new HashMap<>();
-		for(int i =0; i<N;++i) {
+		int[] answer = new int[N];
+		PriorityQueue<Ball> q = new PriorityQueue<>();
+		HashMap<Integer, Integer> map = new HashMap();
+		HashMap<Integer, int[]> has = new HashMap();
+		for (int i = 0; i < N; ++i) {
 			StringTokenizer st = new StringTokenizer(in.readLine());
-			int color = Integer.parseInt(st.nextToken());
-			int size = Integer.parseInt(st.nextToken());
-			balls[i] = new Ball(color,size);
-			if(map.containsKey(color)) {
-				map.get(color).add(size);
+			int c = Integer.parseInt(st.nextToken());
+			int s = Integer.parseInt(st.nextToken());
+			q.add(new Ball(c,s,i));
+			if(map.containsKey(c)) {
+				map.put(c, map.get(c)+s);
+				++has.get(c)[s];
 			}else {
-				ArrayList<Integer> temp  =new ArrayList<>();
-				temp.add(size);
-				map.put(color, temp);
+				map.put(c,s);
+				int[] temp = new int[2001];
+				++temp[s];
+				has.put(c,temp);
 			}
 		}
 		
-		
-		Iterator<Integer> iter = map.keySet().iterator();
-		while(iter.hasNext()) {
-			ArrayList<Integer> array = map.get(iter.next());
-			Integer[] arr =array.toArray(new Integer[array.size()]);
-		}
-		
-		for(int i = 0; i<N;++i) {
-			Ball b = balls[i];
-			Iterator<Integer> iterator = map.keySet().iterator();
+		while(!q.isEmpty()) {
+			Ball b = q.poll();
+			Iterator<Integer> iter = map.keySet().iterator();
 			int sum = 0;
-			while(iterator.hasNext()) {
-				int color = iterator.next();
-				if(b.color == color)
-					continue;
-				Iterator<Integer> it = map.get(color).iterator();
-				while(it.hasNext()) {
-					int size = it.next();
-					if(size < b.size)
-						sum += size;
-					else
-						break;
+			while(iter.hasNext()) {
+				int c = iter.next();
+				if(c == b.color) {
+					map.put(b.color,map.get(c) - b.size);
+					--has.get(c)[b.size];
+				}else {
+					sum += map.get(c);
+					sum -= has.get(c)[b.size] * b.size;
 				}
 			}
-			System.out.println(sum);
+			answer[b.idx] = sum;
 		}
 		
+		
+		for(int i  =0;i<N;++i) {
+			System.out.println(answer[i]);
+		}
 	}
 }

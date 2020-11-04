@@ -100,6 +100,7 @@ public class _1949_등산로조성 {
 				for(int j =1;j<=K;++j) {
 					if(nowNum > moveNum-j) {
 						dfs(new Node(rr,cc,moveNum-j,n.cnt+1,true));
+						break;
 					}
 				}
 			}
