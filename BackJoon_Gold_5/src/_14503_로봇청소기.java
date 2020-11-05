@@ -29,7 +29,7 @@ public class _14503_로봇청소기 {
 		int c = Integer.parseInt(st.nextToken());
 		int dir = Integer.parseInt(st.nextToken());
 		dir = dir % 2 == 1 ? (dir == 1 ? 3 : 1 ): dir;
-		Node start = new Node(r,c,dir);
+		Node robot = new Node(r,c,dir);
 		boolean[][] map = new boolean[N][M];
 		for (int i = 0; i < N; ++i) {
 			st = new StringTokenizer(in.readLine());
@@ -38,6 +38,15 @@ public class _14503_로봇청소기 {
 			}
 		}
 		
-		
+		int count = 0;
+		boolean[][] visited = new boolean[N][M];
+		while(true) {
+			visited[robot.r][robot.c] = true;
+			++count;
+			
+			for(int i = 0;i<4;++i) {
+				
+			}
+		}
 	}
 }
