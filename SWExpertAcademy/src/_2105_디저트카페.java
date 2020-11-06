@@ -65,7 +65,7 @@ public class _2105_디저트카페 {
 		boolean[] met = new boolean[101];
 		Queue<Node> queue = new LinkedList<>();
 		met[array[i][j]] = true;
-							//       좌표            ,방향,이동횟수, 방향전환횟수
+							//       좌표        ,방향,이동횟수, 방향전환횟수
 		queue.offer(new Node(i + dr[0], j + dc[0], 0, 1, 0));
 		queue.offer(new Node(i + dr[1], j + dc[1], 1, 1, 0));
 
