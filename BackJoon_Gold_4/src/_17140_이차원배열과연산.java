@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -12,6 +13,7 @@ public class _17140_이차원배열과연산 {
 
 		Node(int num, int count) {
 			this.num = num;
+			this.count = count;
 		}
 
 		@Override
@@ -42,6 +44,10 @@ public class _17140_이차원배열과연산 {
 			int max = 0;
 			if(A[r][c] == k)
 				break;
+			if(time > 100) {
+				time  = -1;
+				break;
+			}
 			if (rowMax >= colMax) {
 				for (int i = 0; i < rowMax; ++i) {
 					HashMap<Integer,Integer> map = new HashMap<>();
@@ -108,6 +114,10 @@ public class _17140_이차원배열과연산 {
 				rowMax = max;
 			}
 			++time;
+//			for(int i =0; i<10;++i)
+//				System.out.println(Arrays.toString(A[i]));
+//			System.out.println();
+			
 		}
 		System.out.println(time);
 	}
