@@ -39,6 +39,16 @@ public class _2814_최장경로 {
 		}
 		max = Math.max(count, max);
 	}
+	
+	private static int dfs2(int num,int visited) {	//반환마다 +1씩 해서 반환하면 count를 들고다니지 않아도 됨
+		int ret = 1;
+		for(int i = 0 ; i<N;++i) {
+			if((arr[num] &(1<<i))>0 && (visited & (1<<i)) == 0) {	//간선이 있고 방문하지 않았을 때
+				ret = Math.max(dfs2(i,visited|(1<<i))+1,ret);
+			}
+		}
+		return ret;
+	}
 }
 
 /*
