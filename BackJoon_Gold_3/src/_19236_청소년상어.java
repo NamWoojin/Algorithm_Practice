@@ -2,123 +2,115 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-//미완
+
 public class _19236_청소년상어 {
-	static int[] dr = { -1, -1, 0, 1, 1, 1, 0, -1 };
-	static int[] dc = { 0, -1, -1, -1, 0, 1, 1, 1 };
-	static Node shark;
-
-	static class Node {
-		int r, c;
-		int dir;
-		int count = 0;
-
-		Node(int r, int c, int dir) {
-			this.dir = dir;
+	
+	static class Node{
+		int r,c,dir,num;
+		Node(int r, int c,int dir){
 			this.r = r;
 			this.c = c;
+			this.dir = dir;
 		}
-		Node(int r, int c, int dir,int count) {
-			this.dir = dir;
+		Node(int r, int c,int dir,int num){
 			this.r = r;
 			this.c = c;
-			this.count = count;
+			this.dir = dir;
+			this.num = num;
 		}
 	}
-
-	// 상어 = -1, 물고기 없음 = 0
+	static int[] dr = { -1, -1, 0, 1, 1, 1, 0, -1 };
+	static int[] dc = { 0, -1, -1, -1, 0, 1, 1, 1 };
+	static int max = 0;
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		int[][] pond = new int[4][4];
+		int[][] map = new int[4][4];
 		Node[] nodes = new Node[17];
-		for (int i = 0; i < 4; ++i) {
+		for(int r = 0; r<4;++r) {
 			st = new StringTokenizer(in.readLine());
-			for (int j = 0; j < 4; ++j) {
+			for(int c = 0; c<4;++c) {
 				int num = Integer.parseInt(st.nextToken());
 				int dir = Integer.parseInt(st.nextToken()) - 1;
-				pond[i][j] = num;
-				nodes[num] = new Node(i, j, dir);
+				map[r][c] = num;
+				nodes[num] = new Node(r,c,dir);
 			}
 		}
-
-		shark = new Node(0, 0, nodes[pond[0][0]].dir);
-		shark.count = pond[0][0];
-		nodes[pond[0][0]] = null;
-		pond[0][0] = -1;
-
-		moveFish(pond, nodes);
-
+		Node shark = new Node(0,0,nodes[map[0][0]].dir,map[0][0]);
+		nodes[map[0][0]] = null;
+		map[0][0] = -1;
+		solve(map,nodes,shark);
+		System.out.println(max);
 	}
+	
+	static void solve(int[][] map, Node[] nodes,Node shark) {
 
-	private static int moveFish(int[][] pond, Node[] nodes) {
-		for (int i = 1; i < 17; ++i) {
-			if (nodes[i] == null)
+		
+		moveFish(map,nodes);
+		
+		int sr = shark.r;
+		int sc = shark.c;
+		map[sr][sc] = 0;
+		while(true) {
+			sr += dr[shark.dir];
+			sc += dc[shark.dir];
+			
+			if(sr <0 ||sc<0|| sr>= 4|| sc>=4)
+				break;
+			if(map[sr][sc]==0)	//물고기 없는 빈칸
 				continue;
-
-			int r = nodes[i].r;
-			int c = nodes[i].c;
-			for (int j = 0; j < 8; ++j) {
-				int rr = r + dr[nodes[i].dir % 8];
-				int cc = r + dc[nodes[i].dir % 8];
-
-				if (rr < 0 || cc < 0 || rr >= 4 || cc >= 4 || pond[rr][cc] == -1) {
-					++nodes[i].dir;
-					continue;
-				}
-				
-				if(pond[rr][cc] == 0) {
-					pond[rr][cc] = pond[r][c];
-					pond[r][c] = 0;
-					continue;
-				}
-
-				int num = pond[rr][cc];
-				nodes[i].dir ^= nodes[num].dir;
-				nodes[num].dir ^= nodes[i].dir;
-				nodes[i].dir ^= nodes[num].dir;
-
-				pond[rr][cc] ^= pond[r][c];
-				pond[r][c] ^= pond[rr][cc];
-				pond[rr][cc] ^= pond[r][c];
-
-				break;
+			
+			int fishNum = map[sr][sc];
+			
+			int[][] mapTemp = new int[4][];
+			Node[] nodesTemp = nodes.clone();
+			for(int i = 0; i<4;++i) {
+				mapTemp[i] = map[i].clone();
 			}
+			
+			Node sharkTemp = new Node(sr,sc,nodes[fishNum].dir,shark.num+fishNum);
+			nodesTemp[fishNum] = null;
+			mapTemp[sr][sc] = -1;
+			
+			solve(mapTemp,nodesTemp,sharkTemp);
+			
 		}
-
-		return moveShark(pond, nodes);
+		
+		max = Math.max(max, shark.num);
 	}
-
-	private static int moveShark(int[][] pond, Node[] nodes) {
-		int rr = shark.r;
-		int cc = shark.c;
-		int max = 0;
-		pond[shark.r][shark.c] = 0;
-		while (true) {
-			rr += dr[shark.dir % 8];
-			cc += dc[shark.dir % 8];
-			if (rr < 0 || cc < 0 || rr >= 4 || cc >= 4) {
-				break;
+	
+	static void moveFish(int[][] map, Node[] nodes) {
+		for(int i = 1; i<=16;++i) {
+			if(nodes[i] != null) {
+				Node fish = nodes[i];
+				for(int dir = 0; dir<8;++dir) {
+					int newDir = (fish.dir+dir)%8;
+					int rr = fish.r + dr[newDir];
+					int cc = fish.c + dc[newDir];
+					
+					if(rr<0||cc<0||rr>=4||cc>=4)	//공간 넘는 칸
+						continue;
+					if(map[rr][cc] == -1)	// 상어(-1)
+						continue;
+					
+					
+					nodes[i] = new Node(rr,cc,newDir);
+					
+					if(map[rr][cc] != 0) {	//빈칸아닐경우
+						nodes[map[rr][cc]] = new Node(fish.r,fish.c,nodes[map[rr][cc]].dir);
+					}
+					
+					// 자리바꾸기
+					map[rr][cc] ^= map[fish.r][fish.c];
+					map[fish.r][fish.c] ^= map[rr][cc];
+					map[rr][cc] ^= map[fish.r][fish.c];
+					break;
+				}
 			}
-			Node prevShark = shark;
-			Node prevFish = nodes[pond[rr][cc]];
-			nodes[pond[rr][cc]] = null;
-			int fishNum = pond[rr][cc];
-			int[][] tempPond = new int[4][];
-			for(int i =0; i<4;++i) {
-				tempPond[i] = pond[i].clone();
-			}
-			tempPond[rr][cc] = -1;
 			
-			
-			shark = new Node(rr,cc,nodes[pond[rr][cc]].dir,shark.count+fishNum);
-			max= Math.max(max,moveFish(tempPond,nodes) +prevShark.count);
-			
-			shark = prevShark;
-			nodes[pond[rr][cc]] = prevFish;
 		}
-
-		return max;
 	}
-
+	
+	
+	
 }
