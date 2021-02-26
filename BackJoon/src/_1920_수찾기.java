@@ -18,7 +18,8 @@ public class _1920_수찾기 {
 		for (int i = 0; i < N; ++i) {
 			numArray[i] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(numArray);
+		Arrays.sort(numArray);	//배열 정렬
+		
 		int M = Integer.parseInt(in.readLine());
 		st = new StringTokenizer(in.readLine());
 		StringBuilder sb = new StringBuilder();
@@ -29,8 +30,9 @@ public class _1920_수찾기 {
 		System.out.println(sb.toString());
 	}
 	
+	//이분탐색
 	static boolean BinarySearch(int startIdx, int endIdx, int num) {
-		if(startIdx > endIdx) {
+		if(startIdx > endIdx) {	//배열 안에서 같은 수를 못찾았을 때
 			return false;
 		}
 		
@@ -40,7 +42,7 @@ public class _1920_수찾기 {
 			result = BinarySearch(mid+1,endIdx,num);
 		}else if(numArray[mid] > num) {	//중간값이 num보다 작으면
 			result = BinarySearch(startIdx,mid-1,num);
-		}else {
+		}else {	//num과 중간 값이 같으면
 			result = true;
 		}
 		
